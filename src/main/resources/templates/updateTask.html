@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>updateTask</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .name {
+            color: blue;
+        }
+        .large-card {
+            max-width: 800px;
+        }
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="card large-card">
+            <div class="card-body">
+                <h5 class="card-title">update task</h5>
+                <form id="taskForm" th:method="POST" th:action="@{/tasks/{taskId}/updateTask(taskId=${taskId})}" th:object="${upTask}">
+                    <div class="mb-3">
+                        <label for="taskName" class="form-label">task Name</label>
+                        <input type="text" th:field="*{taskName}" class="form-control" id="taskName" placeholder="task Name" required>
+                        <div id="taskNameError" class="error"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="deadLine" class="form-label">deadLine</label>
+                        <input type="date" th:field="*{deadLine}" class="form-control" id="deadLine" placeholder="deadLine" required>
+                        <div id="deadLineError" class="error"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="taskText" class="form-label">task Text</label>
+                        <input type="text" th:field="*{taskText}" class="form-control" id="taskText" placeholder="task Text" required>
+                        <div id="taskTextError" class="error"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script>
+    document.getElementById('taskForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        document.getElementById('taskNameError').innerText = '';
+        document.getElementById('deadLineError').innerText = '';
+        document.getElementById('taskTextError').innerText = '';
+
+        let taskName = document.getElementById('taskName').value;
+        let deadLine = document.getElementById('deadLine').value;
+        let taskText = document.getElementById('taskText').value;
+
+        let isValid = true;
+
+        if (taskName === '') {
+            document.getElementById('taskNameError').innerText = 'task Name is required';
+            isValid = false;
+        }
+
+        if (deadLine === '') {
+            document.getElementById('deadLineError').innerText = 'deadLine is required';
+            isValid = false;
+        }
+
+        if (taskText === '') {
+            document.getElementById('taskTextError').innerText = 'task Text is required';
+            isValid = false;
+        }
+
+        if (isValid) {
+            this.submit();
+        }
+    });
+</script>
+</body>
+</html>

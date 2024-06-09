@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assign Instructor to Company</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body>
+<form th:action="@{'/instructors/assignToCourse/' + ${courseId}}" method="post">
+    <div class="form-group">
+        <label for="instructor">Select Instructor:</label>
+        <select id="instructor" name="instructorId" class="form-control">
+            <option th:each="instructor : ${instructors}" th:value="${instructor.id}"
+                    th:text="${instructor.firstName} + ' ' + ${instructor.lastName}"></option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Assign</button>
+</form>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

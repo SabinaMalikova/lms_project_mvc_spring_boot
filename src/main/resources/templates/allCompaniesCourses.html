@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>allCompanies</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+        #instructors {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #instructors th, #instructors td {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        #instructors th {
+            background-color: #f4f4f4;
+        }
+        .actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        .btn {
+            padding: 5px 10px;
+            text-decoration: none;
+            color: #fff;
+        }
+        .btn-primary {
+            background-color: #007bff;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        .tasks-link, .course-link {
+            color: #000;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <center><h2>Courses</h2></center>
+    <table id="instructors">
+        <thead>
+        <tr>
+            <th>Course Name</th>
+            <th>Date Of Start</th>
+            <th>Description</th>
+            <th>Company name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="course : ${companyCourses}">
+            <td><a th:href="@{/lessons/{courseId}(courseId=${course.id})}" th:text="${course.courseName}" class="course-link">Course Name</a></td>
+            <td th:text="${course.dateOfStart}">Date Of Start</td>
+            <td th:text="${course.description}">Description</td>
+            <td th:text="${course.getCompany().companyName}">Company name</td>
+            <td class="actions">
+                <form th:method="get" th:action="@{/courses/{id}/delete(id=${course.id})}">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <input type="submit" class="btn btn-danger" value="Delete"/>
+                </form>
+                <a th:href="@{/courses/{id}/update(id=${course.id})}" class="btn btn-primary">Update</a>
+                <a th:href="@{/instructors/{id}/getInstructorsByCourseId(id=${course.id})}" class="btn btn-primary">Instructors</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

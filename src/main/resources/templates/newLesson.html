@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>newLesson</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    .name {
+      color: blue;
+    }
+    .large-card {
+      max-width: 800px;
+    }
+    .error {
+      color: red;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="card large-card">
+      <div class="card-body">
+        <h5 class="card-title">Add New Lesson</h5>
+        <form id="LessonForm" th:method="post" th:action="@{/lessons/save/{courseId}(courseId=${courseId})}" th:object="${newLesson}">
+          <div class="mb-3">
+            <label for="lessonName" class="form-label">lesson Name</label>
+            <input type="text" th:field="*{lessonName}" class="form-control" id="lessonName" placeholder="lesson Name" required>
+            <div id="lessonNameError" class="error"></div>
+          </div>
+          <center><button type="submit" class="btn btn-primary">Save</button></center>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script>
+  document.getElementById('LessonForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    document.getElementById('lessonNameError').innerText = '';
+
+    let firstName = document.getElementById('lessonName').value;
+
+    let isValid = true;
+
+    if (firstName === '') {
+      document.getElementById('lessonNameError').innerText = 'lesson name is required';
+      isValid = false;
+    }
+
+    if (isValid) {
+      this.submit();
+    }
+  });
+</script>
+</body>
+</html>
